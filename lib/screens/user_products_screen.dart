@@ -14,7 +14,7 @@ class UserProductsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Product'),
+        title: Text('Your Products'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.add), onPressed: () {}),
         ],
@@ -27,6 +27,7 @@ class UserProductsScreen extends StatelessWidget {
           itemBuilder: (_, i) => Column(
             children: [
               UserProductItem(
+                productsData.items[i].id,
                 productsData.items[i].title,
                 productsData.items[i].imageUrl,
               ),

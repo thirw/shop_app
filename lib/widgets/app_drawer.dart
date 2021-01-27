@@ -33,7 +33,7 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: Icon(Icons.edit),
-            title: Text('Products'),
+            title: Text('Mange Your Products'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserProductsScreen.routeName);
