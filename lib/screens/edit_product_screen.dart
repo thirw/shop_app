@@ -31,6 +31,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     'imageUrl': '',
   };
   var _isInit = true;
+  var _isProductId = false;
 
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
       if (productId != null) {
+        _isProductId = true;
         _editedProduct =
             Provider.of<Products>(context, listen: false).findById(productId);
         _initValues = {
@@ -101,12 +103,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edit Product'), actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.save),
-          onPressed: _saveForm,
-        )
-      ]),
+      appBar: AppBar(
+          title: Text(_isProductId ? 'Edit Product' : 'Add Product'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: _saveForm,
+            )
+          ]),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
