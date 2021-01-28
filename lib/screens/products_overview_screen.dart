@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/cart_screen.dart';
 
+import '../providers/products.dart';
 import '../providers/cart.dart';
 
 import '../widgets/app_drawer.dart';
@@ -21,6 +22,31 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Future.delayed(Duration.zero)
+    //     .then((_) => {Provider.of<Products>(context).fetchAndSetProducts()});
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +93,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavorites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                  // backgroundColor: Theme.of(context).primaryColor,
+                  ),
+            )
+          : ProductsGrid(_showOnlyFavorites),
     );
   }
 }
