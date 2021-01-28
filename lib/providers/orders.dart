@@ -32,11 +32,12 @@ class Orders with ChangeNotifier {
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
-    print(extractedData);
+    //print(extractedData);
     if (extractedData == null) {
       return;
     }
     extractedData.forEach((orderId, orderData) {
+      print(orderData['products']);
       loadedOrders.add(
         OrderItem(
           id: orderId,
@@ -45,11 +46,14 @@ class Orders with ChangeNotifier {
           products: (orderData['products'] as List<dynamic>)
               .map(
                 (item) => CartItem(
-                  id: item['id'],
-                  price: item['price'],
-                  quantity: item['quantity'],
-                  title: item['title'],
-                ),
+                    // id: item['id'],
+                    // price: item['price'],
+                    // quantity: item['quantity'],
+                    // title: item['title'],
+                    id: '1',
+                    price: item['price'],
+                    quantity: item['quantity'],
+                    title: item['title']),
               )
               .toList(),
           // products: List<CartItem>.from(orderData['products'].map((item) =>
@@ -58,6 +62,7 @@ class Orders with ChangeNotifier {
           //         title: item['title'],
           //         quantity: item['quantity'],
           //         price: item['price']))),
+          // products: [],
         ),
       );
     });
@@ -84,6 +89,7 @@ class Orders with ChangeNotifier {
             .toList(),
       }),
     );
+    // print(json.decode(response.body)['name']);
     _orders.insert(
       0,
       OrderItem(

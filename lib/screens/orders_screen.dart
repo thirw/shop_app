@@ -26,8 +26,9 @@ class OrdersScreen extends StatelessWidget {
             if (dataSnapshot.error != null) {
               // ...
               // Do error handling stuff
+              // print(dataSnapshot.error);
               return Center(
-                child: Text('An error occurred!'),
+                child: Text(dataSnapshot.error.toString()),
               );
             } else {
               return Consumer<Orders>(
