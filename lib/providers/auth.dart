@@ -60,34 +60,17 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signup(String email, String password) async {
-    // final url =
-    //     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$apiKey';
-    // final response = await http.post(url,
-    //     body: json.encode(
-    //       {
-    //         'email': email,
-    //         'password': password,
-    //         'returnSecureToken': true,
-    //       },
-    //     ));
-    // print(json.decode(response.body));
-    // notifyListeners();
     return _authenticate(email, password, 'accounts:signUp');
   }
 
   Future<void> login(String email, String password) async {
-    // final url =
-    //     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$apiKey';
-
-    // final response = await http.post(
-    //   url,
-    //   body: json.encode({
-    //     'email': email,
-    //     'password': password,
-    //     'returnSecureToken': true,
-    //   }),
-    // );
-
     return _authenticate(email, password, 'accounts:signInWithPassword');
+  }
+
+  void logout() {
+    _token = null;
+    _userId = null;
+    _expiryDate = null;
+    notifyListeners();
   }
 }
