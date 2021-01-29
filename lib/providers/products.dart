@@ -63,17 +63,13 @@ class Products with ChangeNotifier {
     return _items.firstWhere((element) => element.id == id);
   }
 
-  Future<void> fetchAndSetProducts() async {
-    // const url =
-    //     'https://shop-app-flutter-9f354-default-rtdb.firebaseio.com/products.json?auth=$authToken';
-    var url =
-        'https://shop-app-flutter-9f354-default-rtdb.firebaseio.com/products.json?auth=$authToken';
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    final url =
+        'https://shop-app-flutter-9f354-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString';
     final favUrl =
         'https://shop-app-flutter-9f354-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
-
-    // print(favData);
-
-    // print(extractedData);
 
     try {
       final response = await http.get(url);
